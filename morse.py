@@ -2,7 +2,14 @@
 
 import numpy as np
 
-from morseTable import forwardTable, DOT, DASH, DASH_WIDTH, CHAR_SPACE, WORD_SPACE
+# two ways to import things from the morseTable module
+# the first applies if this directory is a package 'cduck_morse' being
+# imported elsewhere, the second import is the original behavior
+# when just running from this directory
+try:
+  from .morseTable import forwardTable, DOT, DASH, DASH_WIDTH, CHAR_SPACE, WORD_SPACE
+except ImportError:
+  from morseTable import forwardTable, DOT, DASH, DASH_WIDTH, CHAR_SPACE, WORD_SPACE
 
 def letterToMorse(letter):
   if letter in forwardTable:

@@ -6,7 +6,14 @@ import numpy as np
 from scipy import io
 import scipy.io.wavfile
 
-import morse
+# two ways to import things from the morse module
+# the first applies if this directory is a package 'cduck_morse' being
+# imported elsewhere, the second import is the original behavior
+# when just running from this directory
+try:
+  from . import morse
+except ImportError:
+  import morse
 
 SPS = 8000
 LETTERS = string.ascii_uppercase
