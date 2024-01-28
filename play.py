@@ -2,7 +2,6 @@
 
 from __future__ import division, print_function
 import string, time
-import sounddevice as sd
 import numpy as np
 from scipy import io
 import scipy.io.wavfile
@@ -120,7 +119,17 @@ def genTone(frequency, duration, sps=SPS, volume=1.0):
 def playTone(*args, **kwargs):
   play(genTone(*args, **kwargs))
 def play(array, sps=SPS):
-  sd.play(array.astype(np.float32), sps)
+  try:
+    import sounddevice
+  except ImportError:
+    raise Exception(
+      "Play functionality requires the python sounddevice module. "
+      "This will also require a working sound device.")
+  else:
+    # may also fail if the sounddevice module is unable to find a sound device
+    # but in that case the exception should suffice to explain
+    sounddevice.play(array.astype(np.float32), sps)
+
 def waitFor(array, sps=SPS):
   duration = len(array) / sps
   time.sleep(duration)
